@@ -5,7 +5,7 @@ contract Lottery {
     address public owner;
     address payable[] participants;
     uint public lotteryId;
-    uint public amountToParticipate = .1 ether;
+    uint public amountToParticipate = 1_000_000_000_000_000 wei;
     mapping(uint => address payable) public lotteryHistory;
     constructor(){
         lotteryId = 1;
@@ -16,6 +16,7 @@ contract Lottery {
     * @dev sets minimum amount of contribution to participate in lottery
     */
     function setAmountToParticipate(uint amount) public  ownerOnly {
+        require(participants.length < 1);
         amountToParticipate = amount;
     }
 
@@ -45,7 +46,7 @@ contract Lottery {
     * and adds them to participants list
     */
     function enter() public payable {
-        require(msg.value >= amountToParticipate);
+        require(msg.value > amountToParticipate);
         participants.push(payable(msg.sender));
     }
 
