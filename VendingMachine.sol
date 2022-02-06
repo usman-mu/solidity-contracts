@@ -36,4 +36,7 @@ contract VendingMachine{
     function getItemsByAddress(string memory itemName) public view returns(uint){
         return itemBalances[msg.sender][itemName];
     }
+    function withdwarFunds() public onlyOwner{
+      payable(msg.sender).transfer(address(this).balance);
+    }
 }
